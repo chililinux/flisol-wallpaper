@@ -1,12 +1,36 @@
 #!/usr/bin/env bash
 # -*- coding: utf-8 -*-
+export TERM=${TERM:-xterm}
+export TERM=${TERM:-xterm-256color}
+
+# Definindo variáveis de cores (somente em negrito)
+export black="\033[1;30m"
+export red="\033[1;31m"
+export green="\033[1;32m"
+export yellow="\033[1;33m"
+export blue="\033[1;34m"
+export magenta="\033[1;35m"
+export cyan="\033[1;36m"
+export white="\033[1;37m"
+
+# Definindo variáveis para negrito e reset
+export bold="\033[1m"
+export reset="\033[0m"
+
+msg() {
+  local msg="$1"
+  echo -e "${green}==>[flisol-wallpaper] ${bold}${yellow}${msg}${reset}" >&2
+}
 
 post_install() {
   if [[ -e /usr/bin/big-wallpaper-random.flisol ]]; then
     if [[ -e /usr/bin/big-wallpaper-random ]]; then
+      msg "Starting file backup..."
       cp -f /usr/bin/big-wallpaper-random /usr/bin/big-wallpaper-random.bak
     fi
+    msg "Copying necessary files..."
     cp -f /usr/bin/big-wallpaper-random.flisol /usr/bin/big-wallpaper-random
+    msg "Assigning execute permission to the file..."
     chmod +x /usr/bin/big-wallpaper-random
   fi
 }
