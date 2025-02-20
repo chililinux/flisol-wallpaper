@@ -1,6 +1,6 @@
 # Maintainer: Vilmar Catafesta <vcatafesta@gmail.com>
 
-pkgname=flisol-walpaper
+pkgname=flisol-wallpaper
 pkgdesc="Wallpaper to Flisol"
 pkgver=$(date +%Y%m%d)
 pkgrel=$(date +%H%M)
