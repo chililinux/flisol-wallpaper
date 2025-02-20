@@ -65,11 +65,11 @@ package() {
 }
 
 post_install() {
-  if [[ -e /usr/bin/big-wallpaper-random.flisol ]]; then
+  if [[ -e /usr/bin/big-wallpaper-random ]]; then
     cp /usr/bin/big-wallpaper-random /usr/bin/big-wallpaper-random.bak
-    cp /usr/bin/big-wallpaper-random.flisol /usr/bin/big-wallpaper-random
-    chmod +x /usr/bin/big-wallpaper-random
   fi
+  cp /usr/bin/big-wallpaper-random.flisol /usr/bin/big-wallpaper-random
+  chmod +x /usr/bin/big-wallpaper-random
 }
 
 post_upgrade() {
