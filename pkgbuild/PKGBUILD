@@ -63,16 +63,3 @@ package() {
 		install -Dm644 README.md "${pkgdir}/usr/share/doc/${pkgname}/README.md"
 	fi
 }
-
-post_install() {
-  if [[ -e /usr/bin/big-wallpaper-random ]]; then
-    cp /usr/bin/big-wallpaper-random /usr/bin/big-wallpaper-random.bak
-  fi
-  cp /usr/bin/big-wallpaper-random.flisol /usr/bin/big-wallpaper-random
-  chmod +x /usr/bin/big-wallpaper-random
-}
-
-post_upgrade() {
-  post_install
-}
-
