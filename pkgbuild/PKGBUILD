@@ -1,17 +1,11 @@
 # Maintainer: Vilmar Catafesta <vcatafesta@gmail.com>
 
-pkgname=chili-pkgname
-pkgdesc="Package template for Chililinux"
-#depends=('')
-#makedepends=('')
-#optdepends=('')
-#conflicts=('')
-#provides=('')
-#replaces=('')
+pkgname=flisol-walpaper
+pkgdesc="Wallpaper to Flisol"
 pkgver=$(date +%Y%m%d)
 pkgrel=$(date +%H%M)
 arch=('any')
-license=('MIT')
+license=('GPL')
 url="https://github.com/chililinux/${pkgname}"
 source=("git+${url}.git")
 md5sums=('SKIP')
@@ -69,3 +63,16 @@ package() {
 		install -Dm644 README.md "${pkgdir}/usr/share/doc/${pkgname}/README.md"
 	fi
 }
+
+post_install() {
+  if [[ -e /usr/bin/big-wallpaper-random.flisol ]]; then
+    cp /usr/bin/big-wallpaper-random /usr/bin/big-wallpaper-random.bak
+    cp /usr/bin/big-wallpaper-random.flisol /usr/bin/big-wallpaper-random
+    chmod +x /usr/bin/big-wallpaper-random
+  fi
+}
+
+post_upgrade() {
+  post_install
+}
+

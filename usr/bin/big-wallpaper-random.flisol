@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+
+# Directory containing the image files
+dir="/usr/share/wallpapers"
+
+files=(
+	'big-flisol-wallpaper10.avif'
+	'big-flisol-wallpaper11.avif'
+	'big-flisol-wallpaper12.avif'
+	'big-flisol-wallpaper13.avif'
+	'big-flisol-wallpaper1.avif'
+	'big-flisol-wallpaper2.avif'
+	'big-flisol-wallpaper3.avif'
+	'big-flisol-wallpaper4.avif'
+	'big-flisol-wallpaper5.avif'
+	'big-flisol-wallpaper6.avif'
+	'big-flisol-wallpaper7.avif'
+	'big-flisol-wallpaper8.avif'
+	'big-flisol-wallpaper9.avif'
+)
+
+# Array to store the existing files
+existing_files=()
+
+# Checks if the files exist and adds them to the 'existing_files' array
+for file in "${files[@]}"; do
+  [[ -e "$dir/$file" ]] && existing_files+=("$file")
+done
+
+# Checks if there are existing files
+if [ ${#existing_files[@]} -eq 0 ]; then
+	echo "No existing image files found."
+	exit 1
+fi
+
+# Selects a random file from the 'existing_files' array
+random_file="$dir/${existing_files[$RANDOM % ${#existing_files[@]}]}"
+
+# apply as plasma wallpaper
+qdbus org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.evaluateScript "var allDesktops = desktops();print (allDesktops);for (i=0;i<allDesktops.length;i++) {d = allDesktops[i];d.wallpaperPlugin = \"org.kde.image\";d.currentConfigGroup = Array(\"Wallpaper\", \"org.kde.image\", \"General\");d.writeConfig(\"Image\", \"$random_file\");}"
+
+# apply as lock screen
+sed -i "s|^Image=.*|Image=$random_file|" ~/.config/kscreenlockerrc
+sed -i "s|^Image=.*|Image=$random_file|" ~/.config/plasma-org.kde.plasma.desktop-appletsrc
+
+# Displays the randomly selected file
+echo "$random_file"
